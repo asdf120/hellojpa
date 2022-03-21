@@ -12,22 +12,8 @@ public class JpaMain {
         tx.begin();
 
         try {
-            // 회원 가입
-            //Member member = new Member();
-            //member.setId(1L);
-            //member.setName("kim");
-
-            // 회원 정보 수정
-            //Member findMember = em.find(Member.class, 1L);
-            //findMember.setName("HelloJPA");
-
-            // jpql
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList();
-
-            for (Member member : result) {
-                System.out.println("member = " + member.getName());
-            }
+            Member member = em.find(Member.class, 101L);
+            member.setName("수정");
 
             tx.commit();
         }catch (Exception e){
