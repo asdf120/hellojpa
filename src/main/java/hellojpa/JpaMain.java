@@ -15,14 +15,16 @@ public class JpaMain {
 
         try {
             // 저장
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
-
             Member member = new Member();
             member.setUsername("member1");
-            member.changeTeam(team);
+
             em.persist(member);
+
+            Team team = new Team();
+            team.setName("temaA");
+
+            team.getMembers().add(member);
+            em.persist(team);
 
             em.flush();
             em.clear();
