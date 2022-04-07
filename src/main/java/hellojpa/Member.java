@@ -18,13 +18,13 @@ public class Member extends BaseEntity{
 //    @Column(name = "TEAM_ID")
 //    private Long teamId;
 
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
     private Team team;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
+//    @OneToOne
+//    @JoinColumn(name = "LOCKER_ID")
+//    private Locker locker;
 
     @OneToMany(mappedBy = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
@@ -49,9 +49,9 @@ public class Member extends BaseEntity{
         return team;
     }
 
-    public Locker getLocker() {
-        return locker;
-    }
+//    public Locker getLocker() {
+//        return locker;
+//    }
 
     public List<MemberProduct> getMemberProducts() {
         return memberProducts;
@@ -61,9 +61,9 @@ public class Member extends BaseEntity{
         this.team = team;
     }
 
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
+//    public void setLocker(Locker locker) {
+//        this.locker = locker;
+//    }
 
     public void setMemberProducts(List<MemberProduct> memberProducts) {
         this.memberProducts = memberProducts;
