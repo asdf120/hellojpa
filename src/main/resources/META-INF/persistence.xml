@@ -14,23 +14,23 @@
 <!--        <class>hellojpa.Book</class>-->
 <!--        <class>hellojpa.Album</class>-->
 
-<!--        <class>jpabook.jpashop.domain.Member</class>-->
-<!--        <class>jpabook.jpashop.domain.Item</class>-->
-<!--        <class>jpabook.jpashop.domain.Album</class>-->
-<!--        <class>jpabook.jpashop.domain.Book</class>-->
-<!--        <class>jpabook.jpashop.domain.Movie</class>-->
-<!--        <class>jpabook.jpashop.domain.OrderItem</class>-->
-<!--        <class>jpabook.jpashop.domain.Order</class>-->
-<!--        <class>jpabook.jpashop.domain.Delivery</class>-->
-<!--        <class>jpabook.jpashop.domain.Category</class>-->
+        <class>jpabook.jpashop.domain.Member</class>
+        <class>jpabook.jpashop.domain.Item</class>
+        <class>jpabook.jpashop.domain.Album</class>
+        <class>jpabook.jpashop.domain.Book</class>
+        <class>jpabook.jpashop.domain.Movie</class>
+        <class>jpabook.jpashop.domain.OrderItem</class>
+        <class>jpabook.jpashop.domain.Order</class>
+        <class>jpabook.jpashop.domain.Delivery</class>
+        <class>jpabook.jpashop.domain.Category</class>
 
 <!--        <class>cascade.Parent</class>-->
 <!--        <class>cascade.Child</class>-->
 
 <!--        <class>embedded.Member</class>-->
 
-        <class>collection.Member</class>
-        <class>collection.AddressEntity</class>
+<!--        <class>collection.Member</class>-->
+<!--        <class>collection.AddressEntity</class>-->
         <properties>
             <!-- 필수 속성 -->
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

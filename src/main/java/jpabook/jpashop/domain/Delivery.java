@@ -9,11 +9,42 @@ public class Delivery extends BaseEntity{
     @Column(name = "DELIVERY_ID")
     private Long id;
 
-    private String city;
-    private String street;
-    private String zipcode;
+    @Embedded
+    private Address address;
     private DeliverStatus status;
 
     @OneToOne(mappedBy = "delivery",fetch = FetchType.LAZY)
     private Order order;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public DeliverStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DeliverStatus status) {
+        this.status = status;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }
