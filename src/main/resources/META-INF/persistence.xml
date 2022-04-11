@@ -27,7 +27,10 @@
 <!--        <class>cascade.Parent</class>-->
 <!--        <class>cascade.Child</class>-->
 
-        <class>embedded.Member</class>
+<!--        <class>embedded.Member</class>-->
+
+        <class>collection.Member</class>
+        <class>collection.AddressEntity</class>
         <properties>
             <!-- 필수 속성 -->
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
