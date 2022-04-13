@@ -85,7 +85,27 @@ public class JpqlMain {
 //            }
 
             // 조건식 - NULLIF
-            String query = "SELECT NULLIF(m.username, '관리자') FROM Member m ";
+//            String query = "SELECT NULLIF(m.username, '관리자') FROM Member m ";
+//            List<String> resultList = em.createQuery(query, String.class)
+//                    .getResultList();
+//
+//            for (String s : resultList) {
+//                System.out.println("s = " + s);
+//            }
+
+            // JPQL 함수
+//            String query = "SELECT CONCAT('a','b') FROM Member m";
+
+            // LOCATE - 찾고자하는 문자열 시작 위치 반환
+//            String query = "SELECT LOCATE('ae', 'abcdefg') FROM Member m";
+
+
+            // 사용자 정의 함수 호출
+            Member member2 = new Member();
+            member2.setUsername("meber2");
+            em.persist(member2);
+
+            String query = "SELECT FUNCTION('group_concat', m.username) FROM Member m";
             List<String> resultList = em.createQuery(query, String.class)
                     .getResultList();
 
