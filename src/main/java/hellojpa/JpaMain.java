@@ -19,26 +19,21 @@ public class JpaMain {
         tx.begin();
 
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+            //JPQL
+            //SELECT m FROM Member m WHERE m.age > 18
 
-            Root<Member> m = query.from(Member.class);
-
-            CriteriaQuery<Member> cq = query.select(m);
-
-            String username = "kim";
-            // 동적쿼리 작성이 수월하다.
-            if (username != null) {
-                cq = cq.where(cb.equal(m.get("username"), "kim"));
-            }
-
-            List<Member> resultList = em.createQuery(cq)
-                    .getResultList();
+            //QueryDSL
+            JPAFactoryQuery query = new JPAQueryFactory(em);
+            QMember m = QMember.member;
+            List<Member> list = query.selectFrom(m)
+                    .where(m.age.gt(18))
+                    .orderBy(m.name.desc())
+                    .fetch();
 
             tx.commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             tx.rollback();
-        }finally {
+        } finally {
             em.close();
         }
         emf.close();
