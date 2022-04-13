@@ -1,8 +1,9 @@
 package jpql;
 
-import jpql.dto.MemberDTO;
-
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class JpqlMain {
@@ -14,26 +15,38 @@ public class JpqlMain {
         tx.begin();
 
         try {
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
 
-            for(int i = 0; i<100; i++){
-                Member member = new Member();
-                member.setUsername("member" + i);
-                member.setAge(i);
-                em.persist(member);
-            }
+            Member member = new Member();
+            member.setUsername("teamA");
+            member.setAge(30);
+            member.changeTeam(team);
+            em.persist(member);
 
             em.flush();
             em.clear();
 
-            List<Member> result = em.createQuery("SELECT m FROM Member m order by m.age DESC", Member.class)
-                    .setFirstResult(10)
-                    .setMaxResults(10)
+            // INNER 조인
+//            String query = "SELECT m FROM Member m JOIN m.team t";
+
+            // OUTER 조인
+//            String query = "SELECT m FROM Member m LEFT JOIN m.team t";
+
+            // 세타 조인
+//            String query = "SELECT m FROM Member m, Team t WHERE m.username = t.name";
+
+            // 조인대상 필터링
+//            String query = "SELECT m FROM Member m LEFT JOIN m.team t ON t.name = 'teamA'";
+            
+            // 연관관계 없는 외부조인
+            String query = "SELECT m FROM Member m LEFT JOIN m.team t ON m.username = t.name";
+
+            List<Member> result = em.createQuery(query, Member.class)
                     .getResultList();
 
-            System.out.println("result.size() = " + result.size());
-            for (Member member1 : result) {
-                System.out.println("member1 = " + member1);
-            }
+            System.out.println("result = " + result.size());
 
             tx.commit();
         } catch (Exception e) {
