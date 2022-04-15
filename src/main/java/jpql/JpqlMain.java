@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.Collection;
 import java.util.List;
 
 public class JpqlMain {
@@ -101,17 +102,25 @@ public class JpqlMain {
 
 
             // 사용자 정의 함수 호출
-            Member member2 = new Member();
-            member2.setUsername("meber2");
-            em.persist(member2);
+//            Member member2 = new Member();
+//            member2.setUsername("meber2");
+//            em.persist(member2);
+//
+//            String query = "SELECT FUNCTION('group_concat', m.username) FROM Member m";
+//            List<String> resultList = em.createQuery(query, String.class)
+//                    .getResultList();
 
-            String query = "SELECT FUNCTION('group_concat', m.username) FROM Member m";
-            List<String> resultList = em.createQuery(query, String.class)
-                    .getResultList();
+            // 경로 표현식
+//            String query = "SELECT m.team From Member m";
+            String query = "SELECT t.members.size From Team t";
 
-            for (String s : resultList) {
-                System.out.println("s = " + s);
-            }
+            Integer resultList = em.createQuery(query, Integer.class)
+                    .getSingleResult();
+
+            System.out.println("resultList = " + resultList);
+//            for (Object s : resultList) {
+//                System.out.println("s = " + s);
+//            }
 
             tx.commit();
         } catch (Exception e) {
