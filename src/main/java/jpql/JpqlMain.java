@@ -48,9 +48,24 @@ public class JpqlMain {
 //            String query = "SELECT m FROM Member m JOIN FETCH m.team";
 
             // 컬렉션 페치 조인
-            String query = "SELECT DISTINCT t FROM Team t JOIN t.members";
+//            String query = "SELECT DISTINCT t FROM Team t JOIN t.members";
+//
+//            List<Team> resultList = em.createQuery(query, Team.class)
+//                    .getResultList();
+//
+//            for (Team team : resultList) {
+//                System.out.println("team = " + team.getName() + " | members=" + team.getMembers().size());
+//                for(Member m : team.getMembers()){
+//                    System.out.println("m = " + m);
+//                }
+//            }
+
+            // 페이징
+            String query = "SELECT t From Team t";
 
             List<Team> resultList = em.createQuery(query, Team.class)
+                    .setFirstResult(0)
+                    .setMaxResults(1)
                     .getResultList();
 
             for (Team team : resultList) {

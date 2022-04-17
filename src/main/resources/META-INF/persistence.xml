@@ -53,6 +53,8 @@
             <property name="hibernate.use_sql_comments" value="true"/>
 <!--            <property name="hibernate.jdbc.batch_size" value="10"/>-->
             <property name="hibernate.hbm2ddl.auto" value="create" />
+            <!-- 글로벌 배치 적용 @BatchSize(size = 100) -->
+            <property name="hibernate.default_batch_fetch_size" value="100"/>
         </properties>
     </persistence-unit>
 </persistence>
