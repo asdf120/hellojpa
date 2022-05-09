@@ -101,6 +101,15 @@ public class JpqlMain {
             for (Member member1 : resultList) {
                 System.out.println("member1 = " + member1);
             }
+            
+            // 벌크 연산
+            // flush 자동 호출
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
+
+            System.out.println("resultCount = " + resultCount);
+
+            System.out.println("member.getAge() = " + member.getAge());
 
             // INNER 조인
 //            String query = "SELECT m FROM Member m JOIN m.teamA t";
