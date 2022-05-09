@@ -76,21 +76,29 @@ public class JpqlMain {
 //            }
 
             // 엔팉치 직접 사용 - 기본 키 값
-            String query = "select m from Member m where m =:member";
-            Member findMember = em.createQuery(query, Member.class)
-                    .setParameter("member", member)
-                    .getSingleResult();
-
-            System.out.println("findMember = " + findMember);
-
+//            String query = "select m from Member m where m =:member";
+//            Member findMember = em.createQuery(query, Member.class)
+//                    .setParameter("member", member)
+//                    .getSingleResult();
+//
+//            System.out.println("findMember = " + findMember);
+//
             // 엔티티 직접 사용 - 외래 키 값
-            query = "select m from Member m where m.team = : team";
-            List<Member> members = em.createQuery(query, Member.class)
-                    .setParameter("team", teamA)
+//            query = "select m from Member m where m.team = : team";
+//            List<Member> members = em.createQuery(query, Member.class)
+//                    .setParameter("team", teamA)
+//                    .getResultList();
+//
+//            for (Member m : members) {
+//                System.out.println("mmember = " + m);
+//            }
+
+            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
+                    .setParameter("username", "회원1")
                     .getResultList();
 
-            for (Member m : members) {
-                System.out.println("mmember = " + m);
+            for (Member member1 : resultList) {
+                System.out.println("member1 = " + member1);
             }
 
             // INNER 조인
