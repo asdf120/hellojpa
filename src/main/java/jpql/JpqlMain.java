@@ -93,6 +93,7 @@ public class JpqlMain {
 //                System.out.println("mmember = " + m);
 //            }
 
+            // named 쿼리
             List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
                     .setParameter("username", "회원1")
                     .getResultList();
