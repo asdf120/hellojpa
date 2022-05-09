@@ -61,20 +61,37 @@ public class JpqlMain {
 //            }
 
             // 페이징
-            String query = "SELECT t From Team t";
+//            String query = "SELECT t From Team t";
+//
+//            List<Team> resultList = em.createQuery(query, Team.class)
+//                    .setFirstResult(0)
+//                    .setMaxResults(1)
+//                    .getResultList();
+//
+//            for (Team team : resultList) {
+//                System.out.println("team = " + team.getName() + " | members=" + team.getMembers().size());
+//                for(Member m : team.getMembers()){
+//                    System.out.println("m = " + m);
+//                }
+//            }
 
-            List<Team> resultList = em.createQuery(query, Team.class)
-                    .setFirstResult(0)
-                    .setMaxResults(1)
+            // 엔팉치 직접 사용 - 기본 키 값
+            String query = "select m from Member m where m =:member";
+            Member findMember = em.createQuery(query, Member.class)
+                    .setParameter("member", member)
+                    .getSingleResult();
+
+            System.out.println("findMember = " + findMember);
+
+            // 엔티티 직접 사용 - 외래 키 값
+            query = "select m from Member m where m.team = : team";
+            List<Member> members = em.createQuery(query, Member.class)
+                    .setParameter("team", teamA)
                     .getResultList();
 
-            for (Team team : resultList) {
-                System.out.println("team = " + team.getName() + " | members=" + team.getMembers().size());
-                for(Member m : team.getMembers()){
-                    System.out.println("m = " + m);
-                }
+            for (Member m : members) {
+                System.out.println("mmember = " + m);
             }
-
 
             // INNER 조인
 //            String query = "SELECT m FROM Member m JOIN m.teamA t";
@@ -87,7 +104,7 @@ public class JpqlMain {
 
             // 조인대상 필터링
 //            String query = "SELECT m FROM Member m LEFT JOIN m.teamA t ON t.name = 'teamA'";
-            
+
             // 연관관계 없는 외부조인
 //            String query = "SELECT m FROM Member m LEFT JOIN m.teamA t ON m.username = t.name";
 //            List<Member> result = em.createQuery(query, Member.class)
