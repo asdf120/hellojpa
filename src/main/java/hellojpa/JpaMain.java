@@ -12,9 +12,15 @@ import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
-        EntityManager em = emf.createEntityManager();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello"); //EntityManagerFactory 웹서버가 올라오는 시점에 하나 생성
 
+        /**
+         * EntityManager 클라이언트의 요청이 올때마다 생성.
+         * 쓰레드간에 공유 절대 X (사용하고 버려야 한다.)
+         */
+        EntityManager em = emf.createEntityManager();
+        
+        //Jpa의 모든 데이터 변경 작업은 트랜잭션 필수.
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 

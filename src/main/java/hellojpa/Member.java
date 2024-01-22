@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity //JPA를 사용할때 필수, jpa측에서 해당 어노테이션을 통해 객체를 관리.
 public class Member extends BaseEntity{
 
     @Id
