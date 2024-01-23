@@ -5,7 +5,7 @@
   - **영속성 컨텍스트**
     - JPA를 이해하는데 가장 중요한 용어
     - "엔티티를 영구 저장하는 환경"
-    - ```java
+    - ```
       //영속성 컨텍스트를 통해서 entity를 영속화.
       EntityManager.persist(entity); 
       ```
@@ -14,7 +14,7 @@
     - 눈에 보이지 않음.
     - 엔티티 매니저를 통해 영속성 컨텍스트에 접근.
 
-### 엔티티의 생명 주기
+## 엔티티의 생명 주기
 - 비영속 (new/transient)
   - 영속성 컨텍스트와 전혀 관계가 없는 새로운 상태
   - ```
@@ -111,3 +111,31 @@
       ```
     
 - 지연 로딩(lazy loading)
+
+## 플러시
+영속성 컨텍스트의 변경내용을 데이터베이스에 반영
+- 영속성 컨텍스트를 비우지 않는다.
+- 트랜잭션이라는 작업 단위가 중요 -> 커밋 직전에만 동기화 하면된다.
+
+### 플러시 발생
+1. 변경 감지 
+2. 수정된 엔티티 쓰기 지연 SQL 저장소에 등록
+3. 쓰기 지연 SQL 저장소의 쿼리를 데이터베이스에 전송 (등록, 수정, 삭제 쿼리)
+
+### 영속성 컨텍스트를 플러시하는 방법
+- em.flush() - 직접 호출
+- 트랜잭션 커밋 - 플러시 자동 호출
+- JPQL 쿼리 실행 - 플러시 자동 호출
+  - JPQL 쿼리 실행시 플러시가 자동으로 호출되는 이유
+  - ```
+    em.persist(memberA);
+    em.persist(memberB);
+    em.persist(memberC);
+    
+    //중간에 JPQL 실행
+    query = em.createQuery("select m from Member m", Member.class);
+    List<Member> members = query.getResultList();
+    ```
+  - 위와 같은 코드에서 ```em.persist(Member);``` 만으로는 DB에 commit이 되지 않은 상태에서 Select문을 호출하게되면 DB에 저장된 값이 없기때문에 강제로 FLUSH를 호출하여 DB에 저장되도록 함.
+
+
