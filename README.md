@@ -161,7 +161,35 @@
       - 저장할 필드에 final 사용 X
   - @Table
     - 엔티티와 매핑할 테이블 지정
-- 필드와 컬럼 매핑: @Column
+- 필드와 컬럼 매핑
+  - @Column
+    - 속성
+      - name: 필드와 매핑할 테이블의 컬럼 이름. default: 객체의 필드 이름
+      - insertable, updatable: 등록, 변경 가능 여부. default: TRUE
+      - nullable(DDL): null값의 허용여부 설정. false 설정시, DDL 생성 시 not null 제약조건 생성
+      - unique(DDL): @Table의 uniqueConstrains와 같지만 한 컬럼에 간단히 유니크 제약조건을 걸 때 사용
+      - columnDefinition(DDL): 데이터베이스 컬럼 정보를 직접 설정
+      - length: 문자 길이 제약 조건, String 타입에만 사용. default: 255
+      - precision(DDL): BigDecimal 타입에서 사용. 소수점을 포함한 전체 자릿수. default: 19
+      - scale(DDL): BigDecimal 타입에서 사용. 소수의 자릿수
+  - @Enumated: enum 타입을 매핑할 때 사용
+    - 속성
+      - value
+        - EnumType.ORDINAL(default): enum순서를 데이터베이스에 저장
+        - EnumType.STRING: enum 이름을 데이터베이스에 저장
+  - @Lob: 데이터베이스 BLOB, CLOB 타입과 매핑
+    - 지정할 수 있는 속성이 없다.
+    - 매핑하는 필드 타입이 문자면 CLOB 매핑, 나머지는 BLOB 매핑
+      - CLOB: String, char[], java.sql.CLOB
+      - BLOB: byte[], java.sql.BLOB
+  - @Transient: 매핑하지 않을 필드에 사용
+    - 데이터베이스에 저장X, 조회X
+    - 주로 메모리상에서만 임시로 어떤 값을 보관하고 싶을 때 사용
+    ``` 
+    @Transient 
+    private Integer temp;
+    ```
+
 - 기본 키 매핑: @Id
 - 연관관계 매핑: @ManyToOne,@JoinColumn
 
