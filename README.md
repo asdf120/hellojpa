@@ -164,4 +164,19 @@
 - 필드와 컬럼 매핑: @Column
 - 기본 키 매핑: @Id
 - 연관관계 매핑: @ManyToOne,@JoinColumn
-- 
+
+## 데이터베이스 스키마 자동 생성
+- DDL을 애플리케이션 실행 시점에 자동 생성
+- 테이블 중심 -> 객체 중심
+- 데이터베이스 방언을 활용해서 데이터베이스에 맞는 적절한 DDL 생성
+- 생성된 DDL은 운영서버에서는 사용하지 않거나, 적절히 다듬은 후 사용
+- hibernate.hbm2ddl.auto
+  - 속성
+    - create: 기존테이블 삭제 후 다시 생성 (DROP + CRETAE)
+    - create-drop: create와 같으나 종료시점에 테이블 DROP
+    - update: 변경분만 반영(운영DB에서는 사용X)
+    - validate: 엔티티와 테이블이 정상 매핑되었는지만 확인
+    - none: 사용하지 않음
+- DDL 생성 기능: @Column
+  - ex)제약 조건 추가: @Column(nullable = false, length = 10) --> 회원 이름 필수, 10자 초과 X
+  - DDL 생성 기능은 DDL을 자동 생성할 때만 사용되고 JPA의 실행 로직에는 영향을 주지 않는다.
