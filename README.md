@@ -208,3 +208,31 @@
 - DDL 생성 기능: @Column
   - ex)제약 조건 추가: @Column(nullable = false, length = 10) --> 회원 이름 필수, 10자 초과 X
   - DDL 생성 기능은 DDL을 자동 생성할 때만 사용되고 JPA의 실행 로직에는 영향을 주지 않는다.
+
+## 기본 키 매핑
+### 기본 키 매핑 방법
+- 직접 할당: @Id만 사용
+- 자동 생성(@GeneratedValue)
+  - IDENTITY: 데이터베이스에 위임
+    - 주로 MySQL, PostreSQL, SQL Server, DB2에서 사용 (ex: MySQL의 AUTO_INCREMENT)
+    - JPA는 보통 트랜잭션 커밋 시점에 INSERT SQL 실행
+    - AUTO_INCREMENT는 데이터베이스에 INSERT SQL을 실행 한 이후에 ID 값을 알 수 있음
+    - IDENTITY 전략은 em.persist() 시점에 즉시 INSERT SQL 실행하고 DB에서 식별자를 조회
+    
+  - SEQUENCE: 데이터베이스 시퀀스 오브젝트 사용, ORACLE
+    - @SequenceGenerator 필요
+
+  - TABLE: 키 생성용 테이블 사용, 모든 DB에서 사용
+    - @TableGenerator 필요
+    
+  - AUTO: 방언에 따라 자동 지정, 기본값
+
+- TABLE 전략 - 매핑
+  - 키 생성 전용 테이블을 만들어서 데이터베이스 시퀀스를 흉내내는 전략
+  - 장점: 모든 데이터베이스에 적용 가능
+  - 단점: 각 테이블이 시퀀스 테이블을 의존하므로 DB락 문제 등, 성능 이슈 발생 가능성 높음.
+
+### 권장하는 식별자 전략
+- 기본 키 제약 조건: Not null, 유일, 변하면 안된다.
+- 먼 미래까지 기본키 제약 조건을 만족하는 자연키는 찾기 어렵다. 대체키 사용 권장
+- 권장: Long + 대체키 + 키 생성전략 사용
