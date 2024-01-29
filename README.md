@@ -249,7 +249,7 @@
 
 ## 데이터 중심 설계의 문제점
 ```java
-public class Order extends BaseEntity{
+public class Order{
 
     @Id @GeneratedValue
     @Column(name = "ORDER_ID")
@@ -262,3 +262,34 @@ public class Order extends BaseEntity{
 - 테이블의 외래키를 객체에 그대로 가져옴
 - 객체 그래프 탐색이 불가능
 - 참조가 없으므로 UML도 잘못됨
+
+# 연관관계 매핑
+
+## 목표
+- 객체와 테이블 연관관계의 차이를 이해
+- 객체의 참조와 테이블의 외래 키를 매핑
+- 용어 이해
+  - 방향(Direction): 단방향, 양방향
+  - 다중성(Multiply): 다대일(N:1), 일대다(1:N), 일대일(1:1), 다대다(N:M) 이해
+  - 연관관계의 주인(Owner): 객체 양방향 연관관계는 관리 주인이 필요
+
+### 예제 시나리오
+- 회원과 팀이 있다.
+- 회원은 하나의 팀에만 소속될 수 있다.
+- 회원과 팀은 다대일 관계다. (N:1)
+
+```java
+public class Order{
+
+    @Id @GeneratedValue
+    @Column(name = "ORDER_ID")
+    private Long id;
+
+    //객체를 테이블에 맞춰 테이블 연관관계의 Id로만 필드를 구성한경우
+    @Column(name = "MEMBER_ID")
+    private Long memberId;
+```
+객체를 테이블에 맞추어 데이터 중심으로 모델링하면, 협력관계를 만들 수 없다.
+- 테이블은 외래 키로 조인을 사용해서 연관된 테이블을 찾는다.
+- **객체는 참조를 사용** 해서 연관된 객체를 찾는다.
+- 테이블과 객체 사이에는 위 설명과 같은 큰 차이가 있다.
