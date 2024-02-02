@@ -335,3 +335,44 @@ public class Order{
 
 누구를 주인으로?
 - 외래 키가 있는 곳을 주인으로 정한다.
+
+양방향 매핑시 연관관계의 주인에 값을 입력해야 한다. (순수한 객체 관계를 고려하면 항상 양쪽다 값을 입력해야 한다.)
+```java
+Team team = new Team();
+team.setName("teamA");
+em.persist(team);
+
+Member member = new Member();
+member.setName("member1");
+
+team.getMembers().add(member);
+//연관관계의 주인에 값 설정
+member.setTeam(team);
+em.persist(member);
+```
+
+### 양방향 연관관계 주의 - 실습
+- **순수 객체 상태를 고려해서 항상 양쪽에 값을 설정**
+- 연관관계 편의 메소드를 생성하자
+```java
+class Member {
+    // ...
+  public void changeTeam(Team team) {
+    this.team = team;
+    team.getMembers().add(this);
+  }    
+}
+
+```
+- 양방향 매핑시에 무한 루프를 조심하자
+  - ex): toString(), lombok, JSON 생성 라이브러리
+
+### 양방향 매핑 정리
+- 단방향 매핑만으로도 이미 연관관계 매핑은 완료
+- 양방향 매핑은 반대 방향으로 조회(객체 그래프 탐색) 기능이 추가된 것
+- JPQL에서 역방향으로 탐색할 일이 많다.
+- 단방향 매핑을 잘 하고 양방향은 필요할 때 추가해도 된다. (테이블에 영향을 주지 않음)
+
+### 연관관계의 주인을 정하는 기준
+- 비즈니스 로직을 기준으로 연관관계의 주인을 선택하면 안된다.
+- **연관관계의 주인은 외래 키의 위치를 기준으로 정해야 한다.**
